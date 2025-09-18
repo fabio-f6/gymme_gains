@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+
+<table class="table table-striped table-hover table-bordered">
+    <thead class="table-dark">
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Sets</th>
+        <th scope="col">Reps</th>
+        <th scope="col">Weight</th>
+        <th scope="col">Rest</th>
+        <th scope="col">Created at</th>
+        <th scope="col">Updated at</th>
+        <th scope="col">Description</th>
+        <th scope="col">ID</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% if exercises %}
+    {% for exercise in exercises %}
+    <tr>
+        <td>{{ exercise.exercise_name }}</td>
+        <td>{{ exercise.exercise_sets }}</td>
+        <td>{{ exercise.exercise_reps }}</td>
+        <td>{{ exercise.exercise_weight }}</td>
+        <td>{{ exercise.exercise_rest }}</td>
+        <td>{{ exercise.created_at }}</td>
+        <td>{{ exercise.updated_at }}</td>
+        <td>{{ exercise.exercise_description }}</td>
+        <td><a href="{% url 'exercise' exercise.id %}">{{ exercise.id }}</a></td>
+    </tr>
+    {% endfor %}
+    {% endif %}
+    </tbody>
+</table>
+
+
+{% else %}
+
+<div class="col-md-6 offset-md-3">
+<h1>Login</h1>
+<br>
+<form method="POST" action="{% url 'home' %}">
+    {% csrf_token %}
+    <div class="mb-3">
+        <input type="text" class="form-control" name="username" placeholder="Username" required>
+    </div>
+    <div class="mb-3">
+        <input type="password" class="form-control" name="password" placeholder="Password" required>
+    </div>
+    <button type="submit" class="btn btn-secondary">Login</button>
+</form>
+</div>
+
+{% endif %}
+
+{% endblock %}

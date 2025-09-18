@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="card">
+    <div class="card-header"><strong>
+        {{ exercise.exercise_name }}</strong>
+    </div>
+    <div class="card-body">
+
+
+        <p class="card-text">
+            <strong>Sets: </strong>{{ exercise.exercise_sets }}</p>
+
+        <p class="card-text">
+            <strong>Reps: </strong>{{ exercise.exercise_reps }}
+        </p>
+
+        <p class="card-text">
+            <strong>Weight: </strong>{{ exercise.exercise_weight }}</p>
+
+        <p class="card-text">
+            <strong>Rest: </strong>{{ exercise.exercise_rest }}</p>
+
+        <p class="card-text">
+            <strong>Description: </strong>{{ exercise.exercise_description }}</p>
+
+        <p class="card-text">
+            <strong>Created at: </strong>{{ exercise.created_at }}</p>
+
+        <p class="card-text">
+            <strong>Updated at: </strong>{{ exercise.updated_at }}</p>
+
+        <p class="card-text">
+            <strong>ID: </strong>{{ exercise.id }}</p>
+
+    </div>
+</div>
+
+<br><br>
+
+<a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+<a href="{% url 'update_exercise' exercise.id %}" class="btn btn-secondary">Update</a>
+<a href="{% url 'delete_exercise' exercise.id %}" class="btn btn-danger">Delete</a>
+
+{% endblock %}
