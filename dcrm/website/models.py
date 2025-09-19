@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 class Record(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
@@ -24,6 +25,13 @@ class Exercise(models.Model):
     exercise_reps = models.PositiveIntegerField(default=8)
     exercise_weight = models.FloatField(null=True, blank=True)
     exercise_rest = models.PositiveIntegerField(default=60)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name="exercises"
+    )
 
     def __str__(self):
         return(f"{self.exercise_name}")
