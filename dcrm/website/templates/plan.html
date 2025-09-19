@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="card">
+    <div class="card-header"><strong>
+        {{ plan.plan_name }}</strong>
+    </div>
+    <div class="card-body">
+
+
+        <p class="card-text">
+            <strong>Exercises: </strong><br>
+            {% for exercise in plan.exercises.all %}
+            {{ exercise.exercise_name }}: {{ exercise.exercise_sets }}x{{ exercise.exercise_reps }} at {{ exercise.exercise_weight }} kg
+            <br>
+            {% endfor %}
+        </p>
+
+        <p class="card-text">
+            <strong>Completed at: </strong>{{ "placeholder" }}</p>
+
+        <p class="card-text">
+            <strong>Created at: </strong>{{ plan.created_at }}</p>
+
+        <p class="card-text">
+            <strong>Updated at: </strong>{{ plan.updated_at }}</p>
+
+        <p class="card-text">
+            <strong>ID: </strong>{{ plan.id }}</p>
+
+    </div>
+</div>
+
+<br><br>
+
+<a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+<a href="{% url 'update_plan' plan.id %}" class="btn btn-secondary">Update</a>
+<a href="{% url 'delete_plan' plan.id %}" class="btn btn-danger">Delete</a>
+
+
+{% endblock %}

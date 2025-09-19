@@ -4,6 +4,46 @@
 
 {% if user.is_authenticated %}
 
+<h2>Plans</h2>
+<table class="table table-striped table-hover table-bordered">
+    <thead class="table-dark">
+    <tr>
+        <th scope="col">Plan name</th>
+        <th scope="col">Exercises</th>
+        <th scope="col">Completed at</th>
+        <th scope="col">Created at</th>
+        <th scope="col">Updated at</th>
+        <th scope="col">ID</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% if plans %}
+        {% for plan in plans %}
+        <tr>
+            <td>{{ plan.plan_name }}</td>
+            <td>
+                <ul>
+                {% for exercise in plan.exercises.all %}
+                    <li>{{ exercise.exercise_name }}: {{ exercise.exercise_sets }}x{{ exercise.exercise_reps }} at {{ exercise.exercise_weight }} kg</li>
+                {% endfor %}
+                </ul>
+            </td>
+            <td>{{ "placeholder" }}</td>
+            <td>{{ plan.created_at }}</td>
+            <td>{{ plan.created_at }}</td>
+            <td><a href="{% url 'plan' plan.id %}">{{ plan.id }}</a></td>
+        </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="3">Você ainda não criou nenhum plano.</td>
+        </tr>
+    {% endif %}
+    </tbody>
+</table>
+<br>
+
+<h2>Exercises</h2>
 <table class="table table-striped table-hover table-bordered">
     <thead class="table-dark">
     <tr>

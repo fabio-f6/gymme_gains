@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 
+
 class Record(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     first_name = models.CharField(max_length=50)
@@ -13,7 +14,7 @@ class Record(models.Model):
     zipcode = models.CharField(max_length=20)
 
     def __str__(self):
-        return(f"{self.first_name} {self.last_name}")
+        return (f"{self.first_name} {self.last_name}")
 
 
 class Exercise(models.Model):
@@ -34,4 +35,21 @@ class Exercise(models.Model):
     )
 
     def __str__(self):
-        return(f"{self.exercise_name}")
+        return (f"{self.exercise_name}")
+
+
+class Plan(models.Model):
+    plan_name = models.CharField(max_length=50)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name="plans"
+    )
+    exercises = models.ManyToManyField("Exercise", related_name="plans", blank=True)
+
+    def __str__(self):
+        return self.plan_name

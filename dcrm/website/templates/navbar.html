@@ -10,6 +10,9 @@
 
                 {% if user.is_authenticated %}
                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'add_plan' %}">Add plan</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'add_exercise' %}">Add exercise</a>
                 </li>
                 <li class="nav-item">

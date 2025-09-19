@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from .models import Exercise
+from .models import Exercise, Plan
 
 
 class SignUpForm(UserCreationForm):
@@ -54,3 +54,22 @@ class AddExerciseForm(forms.ModelForm):
     class Meta:
         model = Exercise
         exclude = ('created_by',)
+
+
+class AddPlanForm(forms.ModelForm):
+    # só mostra os exercícios do usuário logado
+    exercises = forms.ModelMultipleChoiceField(
+        queryset=Exercise.objects.none(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
+
+    class Meta:
+        model = Plan
+        fields = ["plan_name", "exercises"]
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user", None)
+        super().__init__(*args, **kwargs)
+        if user:
+            self.fields["exercises"].queryset = Exercise.objects.filter(created_by=user)
