@@ -53,4 +53,4 @@ class AddExerciseForm(forms.ModelForm):
 
     class Meta:
         model = Exercise
-        exclude = ('user',)
+        exclude = ('created_by',)

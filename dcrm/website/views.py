@@ -7,7 +7,7 @@ from .models import Exercise
 
 # Create your views here.
 def home(request):
-    exercises = Exercise.objects.all()
+    exercises = Exercise.objects.filter(created_by=request.user)
 
     if request.method == 'POST':
         username = request.POST['username']
@@ -71,7 +71,9 @@ def add_exercise(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
             if form.is_valid():
-                add_exercise = form.save()
+                exercise = form.save()
+                exercise.created_by = request.user
+                exercise.save()
                 messages.success(request, 'Exercise has been added.')
                 return redirect('home')
         return render(request, 'add_exercise.html', {'form': form})
