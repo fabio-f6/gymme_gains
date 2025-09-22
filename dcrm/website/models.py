@@ -50,6 +50,7 @@ class Plan(models.Model):
         related_name="plans"
     )
     exercises = models.ManyToManyField("Exercise", related_name="plans", blank=True)
+    last_executed = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.plan_name

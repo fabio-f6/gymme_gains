@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import SignUpForm, AddExerciseForm, AddPlanForm
 from .models import Exercise, Plan
+from django.utils import timezone
 
 
 # Create your views here.
@@ -151,6 +152,18 @@ def update_plan(request, pk):
             messages.success(request, 'Plan has been updated.')
             return redirect('home')
         return render(request, 'update_plan.html', {'form': form})
+    else:
+        messages.error(request, 'You must be logged in to do that action.')
+        return redirect('home')
+
+
+def execute_plan(request, pk):
+    if request.user.is_authenticated:
+        plan = Plan.objects.get(id=pk, created_by=request.user)
+        plan.last_executed = timezone.now()
+        plan.save()
+        messages.success(request, 'Plan has been executed.')
+        return redirect('home')
     else:
         messages.error(request, 'You must be logged in to do that action.')
         return redirect('home')

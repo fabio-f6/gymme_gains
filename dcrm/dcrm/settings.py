@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+TIME_ZONE = 'Europe/Lisbon'
+USE_TZ = True
 
 # Application definition
 

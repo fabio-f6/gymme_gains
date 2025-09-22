@@ -10,7 +10,7 @@
     <tr>
         <th scope="col">Plan name</th>
         <th scope="col">Exercises</th>
-        <th scope="col">Completed at</th>
+        <th scope="col">Executed at</th>
         <th scope="col">Created at</th>
         <th scope="col">Updated at</th>
         <th scope="col">ID</th>
@@ -18,26 +18,30 @@
     </thead>
     <tbody>
     {% if plans %}
-        {% for plan in plans %}
-        <tr>
-            <td>{{ plan.plan_name }}</td>
-            <td>
-                <ul>
+    {% for plan in plans %}
+    <tr>
+        <td>{{ plan.plan_name }}</td>
+        <td>
+            <ul>
                 {% for exercise in plan.exercises.all %}
-                    <li>{{ exercise.exercise_name }}: {{ exercise.exercise_sets }}x{{ exercise.exercise_reps }} at {{ exercise.exercise_weight }} kg</li>
+                <li>{{ exercise.exercise_name }}: {{ exercise.exercise_sets }}x{{ exercise.exercise_reps }} at {{ exercise.exercise_weight }} kg
+                </li>
                 {% endfor %}
-                </ul>
-            </td>
-            <td>{{ "placeholder" }}</td>
-            <td>{{ plan.created_at }}</td>
-            <td>{{ plan.created_at }}</td>
-            <td><a href="{% url 'plan' plan.id %}">{{ plan.id }}</a></td>
-        </tr>
-        {% endfor %}
+            </ul>
+        </td>
+        <td>{{ plan.last_executed }}</td>
+        <td>{{ plan.created_at }}</td>
+        <td>{{ plan.created_at }}</td>
+        <td><a href="{% url 'plan' plan.id %}">{{ plan.id }}</a></td>
+    </tr>
+    <tr>
+        <td colspan="6"><a href="{% url 'execute_plan' plan.id %}" class="btn btn-success btn-sm">Execute</a></td>
+    </tr>
+    {% endfor %}
     {% else %}
-        <tr>
-            <td colspan="3">Você ainda não criou nenhum plano.</td>
-        </tr>
+    <tr>
+        <td colspan="6">You haven't created any plans.</td>
+    </tr>
     {% endif %}
     </tbody>
 </table>
@@ -73,6 +77,10 @@
         <td><a href="{% url 'exercise' exercise.id %}">{{ exercise.id }}</a></td>
     </tr>
     {% endfor %}
+    {% else %}
+    <tr>
+        <td colspan="9">You haven't created any exercises.</td>
+    </tr>
     {% endif %}
     </tbody>
 </table>
@@ -81,18 +89,18 @@
 {% else %}
 
 <div class="col-md-6 offset-md-3">
-<h1>Login</h1>
-<br>
-<form method="POST" action="{% url 'home' %}">
-    {% csrf_token %}
-    <div class="mb-3">
-        <input type="text" class="form-control" name="username" placeholder="Username" required>
-    </div>
-    <div class="mb-3">
-        <input type="password" class="form-control" name="password" placeholder="Password" required>
-    </div>
-    <button type="submit" class="btn btn-secondary">Login</button>
-</form>
+    <h1>Login</h1>
+    <br>
+    <form method="POST" action="{% url 'home' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <input type="text" class="form-control" name="username" placeholder="Username" required>
+        </div>
+        <div class="mb-3">
+            <input type="password" class="form-control" name="password" placeholder="Password" required>
+        </div>
+        <button type="submit" class="btn btn-secondary">Login</button>
+    </form>
 </div>
 
 {% endif %}

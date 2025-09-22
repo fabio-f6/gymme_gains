@@ -13,6 +13,7 @@ urlpatterns = [
     path('update_plan/<int:pk>', views.update_plan, name='update_plan'),
     path('add_exercise/', views.add_exercise, name='add_exercise'),
     path('add_plan/', views.add_plan, name='add_plan'),
+    path('execute_plan/<int:pk>', views.execute_plan, name="execute_plan"),
 
 ]
 
