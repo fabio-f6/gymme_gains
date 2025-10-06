@@ -73,7 +73,7 @@
         <td>{{ exercise.exercise_rest }}</td>
         <td>{{ exercise.created_at }}</td>
         <td>{{ exercise.updated_at }}</td>
-        <td>{{ exercise.exercise_description }}</td>
+        <td class="text-break">{{ exercise.exercise_description }}</td>
         <td><a href="{% url 'exercise' exercise.id %}">{{ exercise.id }}</a></td>
     </tr>
     {% endfor %}
